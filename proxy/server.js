@@ -31,7 +31,7 @@ app.get('/assets/config.json', (req, res) => {
     keycloakUrl:      process.env.KEYCLOAK_URL      || 'http://localhost:8080',
     keycloakRealm:    process.env.KEYCLOAK_REALM    || 'esquire',
     keycloakClientId: process.env.KEYCLOAK_CLIENT_ID|| 'esq-react',
-    apiBasePath:      process.env.API_BASE_PATH     || 'http://localhost:7070',
+    apiBasePath:      process.env.API_BASE_PATH     ?? 'http://localhost:7070',
     pluginsConfigUrl: process.env.PLUGINS_CONFIG_URL|| '/plugins.config.json',
   });
 });

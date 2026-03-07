@@ -48,7 +48,20 @@ export function EsqAuthProvider({ config, children }: Props) {
       setUser({ ...profile, token: kc.token! });
     } catch (err) {
       console.error('[EsqAuthProvider] fetchAccessProfile failed:', err);
-      // Still mark as loaded — user will see login screen
+      // Fallback user from Keycloak token so Logout stays available
+      setUser({
+        id:              kc.tokenParsed?.sub || '',
+        kind:            0,
+        name:            kc.tokenParsed?.preferred_username || 'User',
+        loginId:         kc.tokenParsed?.preferred_username || '',
+        email:           kc.tokenParsed?.email || '',
+        pwdChangeForced: 'N',
+        tfaMethod:       '',
+        roles:           [],
+        admin:           [],
+        tools:           [],
+        token:           kc.token!,
+      });
     }
   }, [config.apiBasePath]);
 

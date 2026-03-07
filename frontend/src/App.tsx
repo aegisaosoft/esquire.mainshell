@@ -18,7 +18,7 @@ import { DevAuthInfo } from './auth/DevAuthInfo';
 
 // ─── Inner shell — rendered only when config is ready ─────────────────────────
 function Shell({ config }: { config: RuntimeConfig }) {
-  const { isAuthenticated, isLoading, login } = useEsqAuth();
+  const { isAuthenticated, isLoading, login, logout } = useEsqAuth();
   const [manifests,     setManifests]     = useState<PluginManifest[]>([]);
   const [activePlugin,  setActivePlugin]  = useState<PluginManifest | null>(null);
 
