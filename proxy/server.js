@@ -56,10 +56,10 @@ app.use(express.static(DIST));
 // ─── 4. Proxy /api/* → Java gateway ───────────────────────────────────────
 const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070';
 
-app.use('/api', createProxyMiddleware({
+app.use(createProxyMiddleware({
   target:       GATEWAY_URL,
   changeOrigin: true,
-  pathRewrite:  { '^/': '/api/' },   // Express strips /api, re-add for gateway
+  pathFilter:   '/api',              // match /api/* — no path stripping, forwards as-is
   on: {
     error: (err, req, res) => {
       console.error('[proxy] Gateway proxy error:', err.message);
