@@ -8,6 +8,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "esq-auth-context": "file:../packages/esq-auth-context",
     "keycloak-js": "^26.2.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
