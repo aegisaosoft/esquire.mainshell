@@ -21,11 +21,11 @@ const fs         = require('fs');
 const app  = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
-// ─── 1. Frontend static files ──────────────────────────────────────────────
 const DIST = path.join(__dirname, '../frontend/dist');
-app.use(express.static(DIST));
 
-// ─── 2. Runtime config (from env vars, injected by Docker) ────────────────
+// ─── 1. Runtime config (from env vars — MUST be before static files) ──────
+//    express.static would serve the bundled config.json with localhost defaults,
+//    so this dynamic route must win.
 app.get('/assets/config.json', (req, res) => {
   res.json({
     keycloakUrl:      process.env.KEYCLOAK_URL      || 'http://localhost:8080',
@@ -36,7 +36,7 @@ app.get('/assets/config.json', (req, res) => {
   });
 });
 
-// ─── 3. Plugins config (volume-mounted JSON, re-read on each request) ─────
+// ─── 2. Plugins config (volume-mounted JSON, re-read on each request) ─────
 const PLUGINS_CONFIG_FILE = process.env.PLUGINS_CONFIG_FILE
   || path.join(__dirname, '../plugins.config.json');
 
@@ -49,6 +49,9 @@ app.get('/plugins.config.json', (req, res) => {
     res.status(500).json({ error: 'plugins.config.json not found' });
   }
 });
+
+// ─── 3. Frontend static files ──────────────────────────────────────────────
+app.use(express.static(DIST));
 
 // ─── 4. Proxy /api/* → Java gateway ───────────────────────────────────────
 const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070';
