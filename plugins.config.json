@@ -1,0 +1,13 @@
+{
+  "_comment": "Add/remove plugins here. mainshell reads this at runtime — no rebuild needed.",
+  "plugins": [
+    {
+      "id":          "plugin-template",
+      "manifestUrl": "http://plugin-template:3001/manifest"
+    },
+    {
+      "id":          "backoffice",
+      "manifestUrl": "http://backoffice:3002/manifest"
+    }
+  ]
+}

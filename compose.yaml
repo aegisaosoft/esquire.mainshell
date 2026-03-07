@@ -1,0 +1,61 @@
+name: esq-mainshell-dev
+
+services:
+  mainshell:
+    container_name: esq-mainshell
+    build: .
+    image: esquire.mainshell
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - KEYCLOAK_URL=http://host.docker.internal:8080
+      - KEYCLOAK_REALM=esquire
+      - KEYCLOAK_CLIENT_ID=esq-react
+      - API_BASE_PATH=http://esq-gateway:7070
+      - GATEWAY_URL=http://esq-gateway:7070
+      - PLUGINS_CONFIG_FILE=/app/plugins.config.json
+    volumes:
+      # Hot-reload plugins.config.json without rebuilding
+      - ./plugins.config.json:/app/plugins.config.json:ro
+    networks:
+      - esquirenet
+
+  plugin-template:
+    container_name: esq-plugin-template
+    build:
+      context: ../esquire.plugin.template
+    image: esquire.plugin-template
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - PLUGIN_ID=plugin-template
+      - PLUGIN_DISPLAY_NAME=Plugin Template
+      - PLUGIN_VERSION=1.0.0
+      - PLUGIN_HOST=plugin-template
+      - GATEWAY_URL=http://esq-gateway:7070
+    networks:
+      - esquirenet
+
+  backoffice:
+    container_name: esq-backoffice
+    build:
+      context: ../esquire.plugin.backoffice
+    image: esquire.plugin-backoffice
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - PLUGIN_ID=backoffice
+      - PLUGIN_DISPLAY_NAME=Backoffice
+      - PLUGIN_VERSION=1.0.0
+      - PLUGIN_HOST=backoffice
+      - GATEWAY_URL=http://esq-gateway:7070
+    networks:
+      - esquirenet
+
+networks:
+  esquirenet:
+    external: true   # shared with esquire.services network
+    name: esq-omnibus_esquirenet

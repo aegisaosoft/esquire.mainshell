@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target":               "ES2020",
+    "module":               "ESNext",
+    "moduleResolution":     "bundler",
+    "lib":                  ["ES2020", "DOM"],
+    "jsx":                  "react-jsx",
+    "strict":               true,
+    "esModuleInterop":      true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule":    true,
+    "outDir":               "./dist",
+    "baseUrl":              ".",
+    "typeRoots":            ["./node_modules/@types"],
+    "paths": {
+      "esq-auth-context": ["../packages/esq-auth-context/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "../packages/esq-auth-context/src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
