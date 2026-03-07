@@ -59,7 +59,7 @@ const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070';
 app.use(createProxyMiddleware({
   target:       GATEWAY_URL,
   changeOrigin: true,
-  pathFilter:   '/api',              // match /api/* — no path stripping, forwards as-is
+  pathFilter:   ['/api', '/esq-*', '/actuator'],  // gateway API paths
   on: {
     error: (err, req, res) => {
       console.error('[proxy] Gateway proxy error:', err.message);
