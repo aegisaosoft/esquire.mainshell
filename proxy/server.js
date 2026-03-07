@@ -59,7 +59,7 @@ const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070';
 app.use('/api', createProxyMiddleware({
   target:       GATEWAY_URL,
   changeOrigin: true,
-  pathRewrite:  { '^/api': '' },
+  pathRewrite:  { '^/': '/api/' },   // Express strips /api, re-add for gateway
   on: {
     error: (err, req, res) => {
       console.error('[proxy] Gateway proxy error:', err.message);
