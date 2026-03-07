@@ -1,7 +1,0 @@
-{
-  "keycloakUrl":      "http://localhost:8080",
-  "keycloakRealm":    "esquire",
-  "keycloakClientId": "esq-react",
-  "apiBasePath":      "http://localhost:7070",
-  "pluginsConfigUrl": "/plugins.config.json"
-}

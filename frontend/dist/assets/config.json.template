@@ -1,7 +1,0 @@
-{
-  "keycloakUrl":      "${KEYCLOAK_URL}",
-  "keycloakRealm":    "${KEYCLOAK_REALM}",
-  "keycloakClientId": "${KEYCLOAK_CLIENT_ID}",
-  "apiBasePath":      "${API_BASE_PATH}",
-  "pluginsConfigUrl": "${PLUGINS_CONFIG_URL}"
-}
